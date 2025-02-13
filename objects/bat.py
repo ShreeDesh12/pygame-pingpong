@@ -139,4 +139,4 @@ class Bat:
                 self.__x_axis_loc+self.__rect_width<ball_boundary['x_loc']<self.__max_x_axis)
 
         if abs_dist_x <= self._ball_x_hit and abs_dist_y <= self._ball_y_hit and not (is_no_hit_zone):
-            self.__ball.hit_veritical_wall()
+            self.__ball.hit_vertical_wall()
