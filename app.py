@@ -3,6 +3,7 @@ import pygame
 from constants.bat import BatRestrictions
 from constants.common import Colors
 from constants.screen import SCREEN_WIDTH
+from objects.ball import Ball
 from objects.bat import Bat
 from objects.screen import Screen
 
@@ -15,16 +16,22 @@ def setup_game():
     # Screen settings
     pygame.display.set_caption("Rolling Ball")
 
+    ball = Ball(screen=screen)
     bat_player_1 = Bat(
         screen=screen,
         max_x_axis=SCREEN_WIDTH,
         min_x_axis=SCREEN_WIDTH - BatRestrictions.X_AXIS,
+        ball=ball,
+        no_hit_zone="right"
+    )
+    bat_player_2 = Bat(
+        screen=screen,
         left_button=pygame.K_a,
         right_button=pygame.K_d,
         up_button=pygame.K_w,
         down_button=pygame.K_s,
+        ball=ball,
     )
-    bat_player_2 = Bat(screen=screen)
     clock = pygame.time.Clock()
 
     running = True
@@ -44,11 +51,14 @@ def setup_game():
         bat_player_1.display()
         bat_player_2.display()
 
+        ball.move()
+        ball.display()
+
         # Refresh screen
         pygame.display.flip()
 
         # Control frame rate
-        clock.tick(60)
+        clock.tick(30)
 
     pygame.quit()
 

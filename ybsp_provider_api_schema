@@ -1,0 +1,72 @@
+    "mobile_number": {
+          "id": null,
+          "name": "p4",
+          "common_static_param_reference": null,
+          "common_dynamic_param_reference": null,
+          "decentro_request_param_reference": null,
+          "value": null,
+          "database_reference": {
+            "source": "mysql",
+            "table": "company",
+            "filters": {
+              "id": "$.company_id"
+            },
+            "column": "mobile_number",
+            "is_encrypted": false
+          },
+          "trim_length": null
+        },
+    "email": {
+      "id": null,
+      "name": "p5",
+      "common_static_param_reference": null,
+      "common_dynamic_param_reference": null,
+      "decentro_request_param_reference": null,
+      "value": null,
+      "database_reference": {
+        "source": "mysql",
+        "table": "company",
+        "filters": {
+          "id": "$.company_id"
+        },
+        "column": "email_id",
+        "is_encrypted": false
+      },
+      "trim_length": null
+    },
+    "settlement_account_number": {
+      "id": null,
+      "name": "p16",
+      "common_static_param_reference": null,
+      "common_dynamic_param_reference": null,
+      "decentro_request_param_reference": null,
+      "value": null,
+      "database_reference": {
+        "source": "mysql",
+        "table": "company",
+        "filters": {
+          "id": "$.company_id"
+        },
+        "column": "email_id",
+        "is_encrypted": false
+      },
+      "trim_length": null
+    },
+    "settlement_account_ifsc": {
+      "id": null,
+      "name": "p17",
+      "common_static_param_reference": null,
+      "common_dynamic_param_reference": null,
+      "decentro_request_param_reference": null,
+      "value": null,
+      "database_reference": {
+        "source": "mysql",
+        "table": "company",
+        "filters": {
+          "id": "$.company_id"
+        },
+        "column": "email_id",
+        "is_encrypted": false
+      },
+      "trim_length": null
+    }

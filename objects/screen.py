@@ -20,3 +20,6 @@ class Screen:
 
     def set_background(self, color):
         self.__screen_obj.fill(color=color)
+
+    def get_screen_dimensions(self):
+        return self.__height, self.__width
