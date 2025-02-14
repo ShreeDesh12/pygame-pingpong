@@ -51,14 +51,9 @@ class Ball:
 
     def hit_horizontal_wall(self):
         self.__y_speed = -self.__y_speed
-        self.__y_speed = self.__y_speed + 1 if self.__y_speed > 0 else self.__y_speed - 1
 
     def hit_vertical_wall(self):
         self.__x_speed = -self.__x_speed
-        if self.__x_speed > 0:
-            self.__x_speed = max(self.__x_speed + 1, BatSpeed.X_MAX_SPEED)
-        else:
-            self.__x_speed = min(self.__x_speed - 1, -BatSpeed.X_MAX_SPEED)
 
     def __validate_obstacle(self):
         boundary = self.get_boundary()
