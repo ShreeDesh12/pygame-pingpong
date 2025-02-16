@@ -34,25 +34,29 @@ def setup_game():
     )
     clock = pygame.time.Clock()
 
+    game_started = False
+
     running = True
     while running:
         screen.set_background(color=Colors.WHITE)  # Clear screen
+        if not game_started:
+            game_started = screen.start_screen()
 
-        # Event handling
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+        else:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
 
-        keys = pygame.key.get_pressed()
-        if keys:
-            bat_player_1.move(keys=keys)
-            bat_player_2.move(keys=keys)
+            keys = pygame.key.get_pressed()
+            if keys:
+                bat_player_1.move(keys=keys)
+                bat_player_2.move(keys=keys)
 
-        bat_player_1.display()
-        bat_player_2.display()
+            bat_player_1.display()
+            bat_player_2.display()
 
-        ball.move()
-        ball.display()
+            ball.move()
+            ball.display()
 
         # Refresh screen
         pygame.display.flip()
