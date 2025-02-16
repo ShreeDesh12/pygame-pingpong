@@ -30,7 +30,7 @@ def setup_game():
     screen = Screen(start_button=start_button, end_button=None)
 
     # Screen settings
-    pygame.display.set_caption("Rolling Ball")
+    pygame.display.set_caption("PingPong")
 
     ball = Ball(screen=screen)
 

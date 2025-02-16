@@ -1,6 +1,5 @@
 from constants.common import Game, Colors
 from constants.screen import SCREEN_HEIGHT, SCREEN_WIDTH
-from objects.ball import Ball
 from objects.button import Button
 from objects.screen import Screen
 from objects.bat import Bat
