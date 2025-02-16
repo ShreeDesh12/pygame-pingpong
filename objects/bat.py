@@ -30,7 +30,7 @@ class Bat:
         min_x_axis: int = None,
         min_y_axis: int = None,
         ball: Ball = None,
-        no_hit_zone: str = "left"
+        no_hit_zone: str = "left",
     ):
         self.__color = color
         self.__rect_height = rect_height
@@ -58,7 +58,7 @@ class Bat:
         self.__screen = screen.get_screen()
         self.__ball = ball
         if ball:
-            radius = ball.get_dimensions()['radius']
+            radius = ball.get_dimensions()["radius"]
             self._ball_x_hit = (self.__rect_width) / 2 + radius
             self._ball_y_hit = (self.__rect_height) / 2 + radius
 
@@ -135,8 +135,19 @@ class Bat:
         abs_dist_x = abs(ball_boundary["x_loc"] - mid_x_bat_loc)
         abs_dist_y = abs(ball_boundary["y_loc"] - mid_y_bat_loc)
 
-        is_no_hit_zone = self.__min_x_axis<ball_boundary['x_loc']<self.__x_axis_loc if self.no_hit_zone=="left" else (
-                self.__x_axis_loc+self.__rect_width<ball_boundary['x_loc']<self.__max_x_axis)
+        is_no_hit_zone = (
+            self.__min_x_axis < ball_boundary["x_loc"] < self.__x_axis_loc
+            if self.no_hit_zone == "left"
+            else (
+                self.__x_axis_loc + self.__rect_width
+                < ball_boundary["x_loc"]
+                < self.__max_x_axis
+            )
+        )
 
-        if abs_dist_x <= self._ball_x_hit and abs_dist_y <= self._ball_y_hit and not (is_no_hit_zone):
+        if (
+            abs_dist_x <= self._ball_x_hit
+            and abs_dist_y <= self._ball_y_hit
+            and not (is_no_hit_zone)
+        ):
             self.__ball.hit_vertical_wall()

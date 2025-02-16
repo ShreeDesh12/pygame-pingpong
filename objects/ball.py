@@ -59,7 +59,6 @@ class Ball:
         boundary = self.get_boundary()
         screen_height, screen_width = self.__screen.get_screen_dimensions()
         if boundary["start_x"] <= 0 or boundary["end_x"] >= screen_width:
-
             self.__x_axis_loc = screen_width // 2
             self.__y_axis_loc = screen_height // 2
 
@@ -74,3 +73,7 @@ class Ball:
             (self.__x_axis_loc, self.__y_axis_loc),
             self.__radius,
         )
+
+    def reset(self):
+        self.__x_axis_loc = SCREEN_WIDTH // 2
+        self.__y_axis_loc = SCREEN_HEIGHT // 2
