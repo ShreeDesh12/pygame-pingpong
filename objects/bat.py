@@ -103,6 +103,14 @@ class Bat:
             "end_y": self.__y_axis_loc,
         }
 
+    def get_restrictions(self):
+        return {
+            "min_x": self.__min_x_axis,
+            "min_y": self.__min_y_axis,
+            "max_x": self.__max_x_axis,
+            "max_y": self.__max_y_axis,
+        }
+
     def __move_left(self):
         self.__x_axis_loc -= self.__x_speed
 

@@ -18,6 +18,11 @@ def setup_game():
     # Initialize pygame
     pygame.init()
 
+    pygame.mixer.init()
+    pygame.mixer.music.load("music/background-music.mp3")
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.play(-1)
+
     start_button = Button(text_str="Start", toggle_with_mouse=True)
 
     end_button = None
@@ -28,6 +33,7 @@ def setup_game():
     pygame.display.set_caption("Rolling Ball")
 
     ball = Ball(screen=screen)
+
     bat_player_1 = Bat(
         screen=screen,
         max_x_axis=SCREEN_WIDTH,
@@ -35,7 +41,12 @@ def setup_game():
         ball=ball,
         no_hit_zone="right",
     )
-    player_1 = Player(screen=screen.get_screen(), bat=bat_player_1)
+    player_1 = Player(
+        screen=screen.get_screen(),
+        bat=bat_player_1,
+        button_text="Player1 Score",
+        button_color=Colors.RED,
+    )
     player_1.winning_condition = winning_strategy_for_right_player
 
     bat_player_2 = Bat(
@@ -46,7 +57,12 @@ def setup_game():
         down_button=pygame.K_s,
         ball=ball,
     )
-    player_2 = Player(screen=screen.get_screen(), bat=bat_player_2)
+    player_2 = Player(
+        screen=screen.get_screen(),
+        bat=bat_player_2,
+        button_text="Player2 Score",
+        button_color=Colors.BLUE,
+    )
     player_2.winning_condition = winning_strategy_for_left_player
 
     clock = pygame.time.Clock()
