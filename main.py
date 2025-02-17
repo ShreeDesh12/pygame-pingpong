@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 
 from constants.bat import BatRestrictions
@@ -14,12 +15,12 @@ from stratergy.pingpong import (
 )
 
 
-def setup_game():
+async def async_setup_game():
     # Initialize pygame
     pygame.init()
 
     pygame.mixer.init()
-    pygame.mixer.music.load("music/background-music.mp3")
+    pygame.mixer.music.load("music/background-music.wav")
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
@@ -112,8 +113,10 @@ def setup_game():
 
         # Control frame rate
         clock.tick(30)
+        await asyncio.sleep(0)
 
     pygame.quit()
 
 
-setup_game()
+if __name__ == "__main__":
+    asyncio.run(async_setup_game())
