@@ -71,16 +71,16 @@ class Bat:
 
     def move(self, keys):
         if keys[self.__left_button]:
-            self.__move_left()
+            self.move_left()
 
         if keys[self.__right_button]:
-            self.__move_right()
+            self.move_right()
 
         if keys[self.__up_button]:
-            self.__move_up()
+            self.move_up()
 
         if keys[self.__down_button]:
-            self.__move_down()
+            self.move_down()
 
     def display(self):
         self.__validate_position()
@@ -111,16 +111,16 @@ class Bat:
             "max_y": self.__max_y_axis,
         }
 
-    def __move_left(self):
+    def move_left(self):
         self.__x_axis_loc -= self.__x_speed
 
-    def __move_right(self):
+    def move_right(self):
         self.__x_axis_loc += self.__x_speed
 
-    def __move_up(self):
+    def move_up(self):
         self.__y_axis_loc -= self.__y_speed
 
-    def __move_down(self):
+    def move_down(self):
         self.__y_axis_loc += self.__y_speed
 
     def __validate_position(self):

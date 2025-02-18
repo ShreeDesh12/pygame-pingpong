@@ -1,3 +1,6 @@
+from enum import Enum
+
+
 class Colors:
     BLUE = "blue"
     WHITE = (255, 255, 255)
@@ -7,3 +10,9 @@ class Colors:
 
 class Game:
     WIN_SCORE: int = 5
+
+
+class GameMode(str, Enum):
+    NOT_SELECTED = "not_selected"
+    COMPUTER = "computer"
+    TWO_PLAYERS = "2_players"

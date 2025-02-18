@@ -3,5 +3,5 @@ class BallDimensions:
 
 
 class BallSpeed:
-    X_SPEED = 5
-    Y_SPEED = 5
+    X_SPEED = 7
+    Y_SPEED = 7

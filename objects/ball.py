@@ -41,7 +41,7 @@ class Ball:
         self.__x_axis_loc += self.__x_speed
         self.__y_axis_loc += self.__y_speed
 
-    def get_boundary(self):
+    def get_position(self):
         return {
             "start_x": self.__x_axis_loc - self.__radius,
             "start_y": self.__y_axis_loc - self.__radius,
@@ -56,7 +56,7 @@ class Ball:
         self.__x_speed = -self.__x_speed
 
     def __validate_obstacle(self):
-        boundary = self.get_boundary()
+        boundary = self.get_position()
         screen_height, screen_width = self.__screen.get_screen_dimensions()
         if boundary["start_x"] <= 0 or boundary["end_x"] >= screen_width:
             self.__x_axis_loc = screen_width // 2
@@ -77,3 +77,6 @@ class Ball:
     def reset(self):
         self.__x_axis_loc = SCREEN_WIDTH // 2
         self.__y_axis_loc = SCREEN_HEIGHT // 2
+
+    def get_speed(self):
+        return self.__x_speed, self.__y_speed
