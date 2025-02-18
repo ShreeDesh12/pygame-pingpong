@@ -2,13 +2,15 @@ import asyncio
 import pygame
 
 from constants.bat import BatRestrictions
-from constants.common import Colors
-from constants.screen import SCREEN_WIDTH
+from constants.common import Colors, GameMode
+from constants.screen import SCREEN_WIDTH, SCREEN_HEIGHT
 from objects.ball import Ball
 from objects.bat import Bat
 from objects.button import Button
 from objects.player import Player
 from objects.screen import Screen
+from stratergy.autoplay import autoplay
+from stratergy.gamemode import GameModeStrategy
 from stratergy.pingpong import (
     winning_strategy_for_right_player,
     winning_strategy_for_left_player,
@@ -24,11 +26,21 @@ async def async_setup_game():
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
-    start_button = Button(text_str="Start", toggle_with_mouse=True)
+    play_against_computer = Button(text_str="1 Player", x_loc=SCREEN_WIDTH//2, y_loc=SCREEN_HEIGHT//3,
+                                   toggle_with_mouse=True)
+    two_player = Button(text_str="2 Player", x_loc=SCREEN_WIDTH//2, y_loc=2*SCREEN_HEIGHT//3, toggle_with_mouse=True, is_screen_fill_required=False)
 
     end_button = None
 
-    screen = Screen(start_button=start_button, end_button=None)
+    screen = Screen(start_buttons=[{
+        "button": play_against_computer,
+        "operation": GameModeStrategy.set_game_against_computer
+    },{
+        "button": two_player,
+        "operation": GameModeStrategy.set_game_against_player
+    }],
+        end_button=None
+    )
 
     # Screen settings
     pygame.display.set_caption("PingPong")
@@ -68,19 +80,19 @@ async def async_setup_game():
 
     clock = pygame.time.Clock()
 
-    game_started = False
+    game_mode = GameMode.NOT_SELECTED
 
     running = True
     while running:
         screen.set_background(color=Colors.WHITE)
-        if not game_started:
-            game_started = screen.start_screen()
+        if game_mode == GameMode.NOT_SELECTED:
+            game_mode = screen.start_screen()
 
         elif end_button is not None:
             screen.set_end_button(end_button=end_button)
             game_restarted = screen.end_screen()
             if game_restarted:
-                game_started = False
+                game_mode = GameMode.NOT_SELECTED
                 end_button = None
                 player_1.set_score(0)
                 player_2.set_score(0)
@@ -94,7 +106,11 @@ async def async_setup_game():
             keys = pygame.key.get_pressed()
             if keys:
                 player_1.move_bat(keys=keys)
-                player_2.move_bat(keys=keys)
+                if game_mode == GameMode.TWO_PLAYERS:
+                    player_2.move_bat(keys=keys)
+
+            if game_mode == GameMode.COMPUTER:
+                autoplay(bat=bat_player_2, ball=ball)
 
             player_1.display()
             player_2.display()
