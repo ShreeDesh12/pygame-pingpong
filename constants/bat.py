@@ -1,3 +1,4 @@
+from enum import Enum
 from sys import maxsize
 
 
@@ -16,3 +17,10 @@ class BatRestrictions:
 class BatDimensions:
     HEIGHT = 40
     WIDTH = 10
+
+
+class Movement(str, Enum):
+    UP = "UP"
+    DOWN = "DOWN"
+    RIGHT = "RIGHT"
+    LEFT = "LEFT"
