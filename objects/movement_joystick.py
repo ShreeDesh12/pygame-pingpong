@@ -8,7 +8,7 @@ from objects.player import Player
 
 class MovementJoystick:
     def __init__(self, player: Player, screen: Any):
-        image_center_x, image_center_y = (player.max_x + player.min_x)//2, SCREEN_HEIGHT - 50
+        image_center_x, image_center_y = (player.max_x + player.min_x)//2, SCREEN_HEIGHT - 100
 
         self.move_up = ImageButton(image_file="images/up-arrow.png", image_center=(image_center_x, image_center_y-20), screen=screen)
         self.move_down = ImageButton(image_file="images/down-arrow.png", image_center=(image_center_x, image_center_y+20),
