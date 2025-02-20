@@ -7,7 +7,6 @@ from constants.screen import SCREEN_WIDTH, SCREEN_HEIGHT
 from objects.ball import Ball
 from objects.bat import Bat
 from objects.button import Button
-from objects.image_button import ImageButton
 from objects.movement_joystick import MovementJoystick
 from objects.player import Player
 from objects.screen import Screen
@@ -87,6 +86,8 @@ async def async_setup_game():
 
     game_mode = GameMode.NOT_SELECTED
 
+    mouse_pos = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+
     running = True
     while running:
         screen.set_background(color=Colors.WHITE)
@@ -110,8 +111,13 @@ async def async_setup_game():
                 if event.type == pygame.QUIT:
                     running = False
 
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            joystick_player1.perform_movement(mouse_pos=(mouse_x, mouse_y))
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_pos = event.pos
+
+                if event.type == pygame.MOUSEBUTTONUP:
+                    mouse_pos = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+
+            joystick_player1.perform_movement(mouse_pos=mouse_pos)
 
             keys = pygame.key.get_pressed()
             if keys:
@@ -124,7 +130,7 @@ async def async_setup_game():
 
             if game_mode == GameMode.TWO_PLAYERS:
                 joystick_player2.display()
-                joystick_player2.perform_movement(mouse_pos=(mouse_x, mouse_y))
+                joystick_player2.perform_movement(mouse_pos=mouse_pos)
 
             player_1.display()
             player_2.display()
