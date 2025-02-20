@@ -7,6 +7,8 @@ from constants.screen import SCREEN_WIDTH, SCREEN_HEIGHT
 from objects.ball import Ball
 from objects.bat import Bat
 from objects.button import Button
+from objects.image_button import ImageButton
+from objects.movement_joystick import MovementJoystick
 from objects.player import Player
 from objects.screen import Screen
 from stratergy.autoplay import autoplay
@@ -70,6 +72,8 @@ async def async_setup_game():
         down_button=pygame.K_s,
         ball=ball,
     )
+    joystick_player1 = MovementJoystick(player=player_1, screen=screen.get_screen())
+
     player_2 = Player(
         screen=screen.get_screen(),
         bat=bat_player_2,
@@ -77,6 +81,7 @@ async def async_setup_game():
         button_color=Colors.BLUE,
     )
     player_2.winning_condition = winning_strategy_for_left_player
+    joystick_player2 = MovementJoystick(player=player_2, screen=screen.get_screen())
 
     clock = pygame.time.Clock()
 
@@ -99,9 +104,14 @@ async def async_setup_game():
                 ball.reset()
 
         else:
+            joystick_player1.display()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            joystick_player1.perform_movement(mouse_pos=(mouse_x, mouse_y))
 
             keys = pygame.key.get_pressed()
             if keys:
@@ -111,6 +121,10 @@ async def async_setup_game():
 
             if game_mode == GameMode.COMPUTER:
                 autoplay(bat=bat_player_2, ball=ball)
+
+            if game_mode == GameMode.TWO_PLAYERS:
+                joystick_player2.display()
+                joystick_player2.perform_movement(mouse_pos=(mouse_x, mouse_y))
 
             player_1.display()
             player_2.display()

@@ -1,3 +1,4 @@
+from constants.bat import Movement
 from constants.common import Game, Colors
 from constants.screen import SCREEN_HEIGHT, SCREEN_WIDTH
 from objects.button import Button
@@ -37,6 +38,10 @@ class Player:
             else None
         )
         self.button_text = button_text
+        self.max_x = bat_pos["max_x"]
+        self.min_x = bat_pos["min_x"]
+        self.max_y = bat_pos["max_y"]
+        self.min_y = bat_pos["min_y"]
 
     def set_bat(self, bat: Bat):
         self.__bat = bat
@@ -49,6 +54,19 @@ class Player:
 
     def move_bat(self, keys):
         self.__bat.move(keys=keys)
+
+    def move_bat_using_joystick(self, movement: Movement):
+        if movement == Movement.UP:
+            self.__bat.move_up()
+
+        elif movement == Movement.DOWN:
+            self.__bat.move_down()
+
+        elif movement == Movement.LEFT:
+            self.__bat.move_left()
+
+        elif movement == Movement.RIGHT:
+            self.__bat.move_right()
 
     def display(self):
         self.__bat.display()
