@@ -7,6 +7,7 @@ from constants.screen import SCREEN_WIDTH, SCREEN_HEIGHT
 from objects.ball import Ball
 from objects.bat import Bat
 from objects.button import Button
+from objects.characters import Character
 from objects.movement_joystick import MovementJoystick
 from objects.player import Player
 from objects.screen import Screen
@@ -23,7 +24,7 @@ async def async_setup_game():
     pygame.init()
 
     pygame.mixer.init()
-    pygame.mixer.music.load("music/background-music.wav")
+    pygame.mixer.music.load("music/naruto-background-music.wav")
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
@@ -48,12 +49,14 @@ async def async_setup_game():
 
     ball = Ball(screen=screen)
 
-    bat_player_1 = Bat(
+    bat_player_1 = Character(
         screen=screen,
+        image_loc="images/characters/naruto/naruto-basic.png",
         max_x_axis=SCREEN_WIDTH,
         min_x_axis=SCREEN_WIDTH - BatRestrictions.X_AXIS,
         ball=ball,
         no_hit_zone="right",
+        hit_character_img="images/characters/naruto/naruto-attack-2.png"
     )
     player_1 = Player(
         screen=screen.get_screen(),
@@ -63,13 +66,15 @@ async def async_setup_game():
     )
     player_1.winning_condition = winning_strategy_for_right_player
 
-    bat_player_2 = Bat(
+    bat_player_2 = Character(
         screen=screen,
         left_button=pygame.K_a,
         right_button=pygame.K_d,
         up_button=pygame.K_w,
         down_button=pygame.K_s,
         ball=ball,
+        image_loc="images/characters/sasuke/sasuke-basic.png",
+        hit_character_img="images/characters/sasuke/sasuke-attack.png",
     )
     joystick_player1 = MovementJoystick(player=player_1, screen=screen.get_screen())
 

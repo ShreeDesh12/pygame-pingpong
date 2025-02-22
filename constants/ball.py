@@ -1,7 +1,7 @@
 class BallDimensions:
-    RADIUS = 10
+    RADIUS = 7
 
 
 class BallSpeed:
-    X_SPEED = 7
-    Y_SPEED = 7
+    X_SPEED = 8
+    Y_SPEED = 8
