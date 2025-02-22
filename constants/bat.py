@@ -4,7 +4,7 @@ from sys import maxsize
 
 class BatSpeed:
     X_SPEED = 5
-    Y_SPEED = 5
+    Y_SPEED = 7
     X_MAX_SPEED = 10
     Y_MAX_SPEED = 10
 
@@ -17,8 +17,8 @@ class BatRestrictions:
 class BatDimensions:
     HEIGHT = 40
     WIDTH = 10
-    CHARACTER_HEIGHT = 40
-    CHARACTER_WIDTH = 20
+    CHARACTER_HEIGHT = 60
+    CHARACTER_WIDTH = 30
 
 
 class Movement(str, Enum):

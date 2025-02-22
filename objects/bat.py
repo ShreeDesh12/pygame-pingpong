@@ -137,7 +137,7 @@ class Bat:
         if self._y_axis_loc > self._max_y_axis:
             self._y_axis_loc = self._max_y_axis
 
-    def _hit_ball(self):
+    def _hit_ball(self) -> bool:
         mid_x_bat_loc = self._x_axis_loc + (self._rect_width) / 2
         mid_y_bat_loc = self._y_axis_loc + (self._rect_height) / 2
         ball_boundary = self._ball.get_dimensions()
@@ -160,3 +160,6 @@ class Bat:
             and not (is_no_hit_zone)
         ):
             self._ball.hit_vertical_wall()
+            return True
+
+        return False

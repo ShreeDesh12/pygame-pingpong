@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 
 import pygame
 
@@ -30,6 +30,7 @@ class Character(Bat):
             min_y_axis: int = None,
             ball: Ball = None,
             no_hit_zone: str = "left",
+            hit_character_img: Optional[str] = None
             ):
         super().__init__(
             screen=screen,
@@ -48,11 +49,15 @@ class Character(Bat):
             min_x_axis=min_x_axis,
             min_y_axis=min_y_axis,
             ball=ball,
-            no_hit_zone=no_hit_zone
+            no_hit_zone=no_hit_zone,
         )
-        print(self._screen)
+        self._hit_time = None
         self.character_img = pygame.image.load(image_loc).convert_alpha()
         self.character_img = pygame.transform.scale(self.character_img, (rect_width, rect_height))
+
+        if hit_character_img:
+            self.hit_character_img = pygame.image.load(hit_character_img).convert_alpha()
+            self.hit_character_img = pygame.transform.scale(self.hit_character_img, (rect_width, rect_height))
 
     def set_image(self, image_loc: str):
         self.character_img = pygame.image.load(image_loc)
@@ -60,5 +65,16 @@ class Character(Bat):
 
     def display(self):
         self._validate_position()
-        self._hit_ball()
+        if self._hit_ball():
+            self._hit_time = pygame.time.get_ticks()
+
+        if self._hit_time and pygame.time.get_ticks() - self._hit_time < 500:
+            self._display_hit_character()
+        else:
+            self._display_character()
+
+    def _display_character(self):
         self._screen.blit(self.character_img, (self._x_axis_loc, self._y_axis_loc))
+
+    def _display_hit_character(self):
+        self._screen.blit(self.hit_character_img, (self._x_axis_loc, self._y_axis_loc))
