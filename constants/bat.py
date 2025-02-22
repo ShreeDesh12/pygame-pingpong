@@ -17,6 +17,8 @@ class BatRestrictions:
 class BatDimensions:
     HEIGHT = 40
     WIDTH = 10
+    CHARACTER_HEIGHT = 40
+    CHARACTER_WIDTH = 20
 
 
 class Movement(str, Enum):
@@ -24,3 +26,4 @@ class Movement(str, Enum):
     DOWN = "DOWN"
     RIGHT = "RIGHT"
     LEFT = "LEFT"
+
