@@ -1,15 +1,16 @@
 import asyncio
 import pygame
 
+from constants.ball import PowerEvent, BallSpeed
 from constants.bat import BatRestrictions
 from constants.common import Colors, GameMode
 from constants.screen import SCREEN_WIDTH, SCREEN_HEIGHT
-from objects.ball import Ball
-from objects.bat import Bat
+from objects.ball_object import BallObject
 from objects.button import Button
 from objects.characters import Character
 from objects.movement_joystick import MovementJoystick
 from objects.player import Player
+from objects.power import Power
 from objects.screen import Screen
 from stratergy.autoplay import autoplay
 from stratergy.gamemode import GameModeStrategy
@@ -17,6 +18,7 @@ from stratergy.pingpong import (
     winning_strategy_for_right_player,
     winning_strategy_for_left_player,
 )
+from stratergy.power import speed_up
 
 
 async def async_setup_game():
@@ -47,7 +49,8 @@ async def async_setup_game():
     # Screen settings
     pygame.display.set_caption("PingPong")
 
-    ball = Ball(screen=screen)
+    ball = BallObject(screen=screen, image_loc="images/ball/shiruken.png")
+    power = Power(event=PowerEvent.SPEED_UP, strategy=speed_up, ball=ball)
 
     bat_player_1 = Character(
         screen=screen,
@@ -56,7 +59,9 @@ async def async_setup_game():
         min_x_axis=SCREEN_WIDTH - BatRestrictions.X_AXIS,
         ball=ball,
         no_hit_zone="right",
-        hit_character_img="images/characters/naruto/naruto-attack-2.png"
+        hit_character_img="images/characters/naruto/naruto-attack-2.png",
+        power=power,
+        power_button=pygame.K_SPACE
     )
     player_1 = Player(
         screen=screen.get_screen(),
@@ -72,6 +77,7 @@ async def async_setup_game():
         right_button=pygame.K_d,
         up_button=pygame.K_w,
         down_button=pygame.K_s,
+        power_button=pygame.K_r,
         ball=ball,
         image_loc="images/characters/sasuke/sasuke-basic.png",
         hit_character_img="images/characters/sasuke/sasuke-attack.png",
@@ -140,13 +146,14 @@ async def async_setup_game():
             player_1.display()
             player_2.display()
 
+            ball.move()
+
             if player_1.check_win_and_increase_score(ball):
                 end_button = Button(text_str="Player 1 Won!", toggle_with_mouse=True)
 
             if player_2.check_win_and_increase_score(ball):
                 end_button = Button(text_str="Player 2 Won!", toggle_with_mouse=True)
 
-            ball.move()
             ball.display()
 
         # Refresh screen
