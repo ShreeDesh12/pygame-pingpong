@@ -92,3 +92,6 @@ class Ball:
 
         if inc_speed_y is not None:
             self._y_speed += inc_speed_y
+
+    def update_radius(self, radius: int):
+        self._radius = radius

@@ -50,7 +50,7 @@ async def async_setup_game():
     pygame.display.set_caption("PingPong")
 
     ball = BallObject(screen=screen, image_loc="images/ball/shiruken.png")
-    power = Power(event=PowerEvent.SPEED_UP, strategy=speed_up, ball=ball)
+    power = Power(event=PowerEvent.SPEED_UP, strategy=speed_up, ball=ball, ball_img="images/ball/rasengan.png")
 
     bat_player_1 = Character(
         screen=screen,
