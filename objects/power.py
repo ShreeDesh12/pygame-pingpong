@@ -16,7 +16,7 @@ class Power:
         self.powered_up: bool = False
         self._original_ball_character_img = None
 
-    def use(self):
+    def use(self, **kwargs):
         x_speed, y_speed = self.ball.get_speed()
         x_speed = BallSpeed.X_SPEED+BallSpeed.POWER_SPEED if x_speed > 0 else -BallSpeed.X_SPEED-BallSpeed.POWER_SPEED
         y_speed = BallSpeed.Y_SPEED+BallSpeed.POWER_SPEED if y_speed > 0 else -BallSpeed.Y_SPEED-BallSpeed.POWER_SPEED

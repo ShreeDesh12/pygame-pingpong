@@ -1,7 +1,10 @@
+from typing import Optional
+
 from constants.bat import Movement
 from constants.common import Game, Colors
 from constants.screen import SCREEN_HEIGHT, SCREEN_WIDTH
 from objects.button import Button
+from objects.image_button import ImageButton
 from objects.screen import Screen
 from objects.bat import Bat
 
@@ -13,6 +16,7 @@ class Player:
         bat: Bat,
         button_text: str = None,
         button_color: Colors = Colors.RED,
+        power_button: Optional[ImageButton] = None
     ):
         self.__screen = screen
         self.bat = bat
@@ -38,6 +42,8 @@ class Player:
             else None
         )
         self.button_text = button_text
+        self.power_button = power_button
+
         self.max_x = bat_pos["max_x"]
         self.min_x = bat_pos["min_x"]
         self.max_y = bat_pos["max_y"]
@@ -71,6 +77,8 @@ class Player:
     def display(self):
         self.bat.display()
         self.__button_display()
+        if self.power_button:
+            self.power_button.display()
 
     def set_score(self, new_score: int):
         self._score = new_score

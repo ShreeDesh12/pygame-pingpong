@@ -8,6 +8,7 @@ from constants.screen import SCREEN_WIDTH, SCREEN_HEIGHT
 from objects.ball_object import BallObject
 from objects.button import Button
 from objects.characters import Character
+from objects.image_button import ImageButton
 from objects.movement_joystick import MovementJoystick
 from objects.player import Player
 from objects.power import Power
@@ -52,6 +53,15 @@ async def async_setup_game():
     ball = BallObject(screen=screen, image_loc="images/ball/shiruken.png")
     power = Power(event=PowerEvent.SPEED_UP, strategy=speed_up, ball=ball, ball_img="images/ball/rasengan.png")
 
+    power_button = ImageButton(
+        image_file="images/power/punch.png",
+        image_center=(SCREEN_WIDTH - BatRestrictions.X_AXIS, SCREEN_HEIGHT//5),
+        screen=screen.get_screen(),
+        border=Colors.GREEN,
+        operation=power.use,
+        timer=10000
+    )
+
     bat_player_1 = Character(
         screen=screen,
         image_loc="images/characters/naruto/naruto-basic.png",
@@ -68,6 +78,7 @@ async def async_setup_game():
         bat=bat_player_1,
         button_text="Player1 Score",
         button_color=Colors.RED,
+        power_button=power_button
     )
     player_1.winning_condition = winning_strategy_for_right_player
 
@@ -129,6 +140,7 @@ async def async_setup_game():
                     mouse_pos = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 
             joystick_player1.perform_movement(mouse_pos=mouse_pos)
+            power_button.perform_movement(mouse_pos=mouse_pos)
 
             keys = pygame.key.get_pressed()
             if keys:
