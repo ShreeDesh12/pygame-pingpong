@@ -1,7 +1,7 @@
 import pygame
+from typing import Dict
 
 from constants.ball import BallDimensions, BallSpeed
-from constants.bat import BatSpeed
 from constants.common import Colors
 from constants.screen import SCREEN_WIDTH, SCREEN_HEIGHT
 from objects.screen import Screen
@@ -17,66 +17,81 @@ class Ball:
         y_axis_loc: int = SCREEN_HEIGHT // 2,
         radius: int = BallDimensions.RADIUS,
         color: str = Colors.RED,
+        **kwargs
     ):
-        self.__color = color
+        self._color = color
 
-        self.__radius = radius
+        self._radius = radius
 
-        self.__x_speed = speed_x
-        self.__y_speed = speed_y
+        self._x_speed = speed_x
+        self._y_speed = speed_y
 
-        self.__x_axis_loc = x_axis_loc
-        self.__y_axis_loc = y_axis_loc
+        self._x_axis_loc = x_axis_loc
+        self._y_axis_loc = y_axis_loc
 
-        self.__screen = screen
+        self._screen = screen
 
     def get_dimensions(self):
         return {
-            "x_loc": self.__x_axis_loc,
-            "y_loc": self.__y_axis_loc,
-            "radius": self.__radius,
+            "x_loc": self._x_axis_loc,
+            "y_loc": self._y_axis_loc,
+            "radius": self._radius,
         }
 
     def move(self):
-        self.__x_axis_loc += self.__x_speed
-        self.__y_axis_loc += self.__y_speed
+        self._x_axis_loc += self._x_speed
+        self._y_axis_loc += self._y_speed
 
     def get_position(self):
         return {
-            "start_x": self.__x_axis_loc - self.__radius,
-            "start_y": self.__y_axis_loc - self.__radius,
-            "end_x": self.__x_axis_loc + self.__radius,
-            "end_y": self.__y_axis_loc + self.__radius,
+            "start_x": self._x_axis_loc - self._radius,
+            "start_y": self._y_axis_loc - self._radius,
+            "end_x": self._x_axis_loc + self._radius,
+            "end_y": self._y_axis_loc + self._radius,
         }
 
     def hit_horizontal_wall(self):
-        self.__y_speed = -self.__y_speed
+        self._y_speed = -self._y_speed
 
     def hit_vertical_wall(self):
-        self.__x_speed = -self.__x_speed
+        self._x_speed = -self._x_speed
 
-    def __validate_obstacle(self):
+    def _validate_obstacle(self):
         boundary = self.get_position()
-        screen_height, screen_width = self.__screen.get_screen_dimensions()
+        screen_height, screen_width = self._screen.get_screen_dimensions()
         if boundary["start_x"] <= 0 or boundary["end_x"] >= screen_width:
-            self.__x_axis_loc = screen_width // 2
-            self.__y_axis_loc = screen_height // 2
+            self._x_axis_loc = screen_width // 2
+            self._y_axis_loc = screen_height // 2
 
         if boundary["start_y"] <= 0 or boundary["end_y"] >= screen_height:
             self.hit_horizontal_wall()
 
     def display(self):
-        self.__validate_obstacle()
+        self._validate_obstacle()
         pygame.draw.circle(
-            self.__screen.get_screen(),
+            self._screen.get_screen(),
             Colors.RED,
-            (self.__x_axis_loc, self.__y_axis_loc),
-            self.__radius,
+            (self._x_axis_loc, self._y_axis_loc),
+            self._radius,
         )
 
     def reset(self):
-        self.__x_axis_loc = SCREEN_WIDTH // 2
-        self.__y_axis_loc = SCREEN_HEIGHT // 2
+        self._x_axis_loc = SCREEN_WIDTH // 2
+        self._y_axis_loc = SCREEN_HEIGHT // 2
 
     def get_speed(self):
-        return self.__x_speed, self.__y_speed
+        return self._x_speed, self._y_speed
+
+    def set_speed(self, x_speed: int, y_speed: int):
+        self._x_speed = x_speed
+        self._y_speed = y_speed
+
+    def update_speed(self, inc_speed_x: int = None, inc_speed_y: int = None):
+        if inc_speed_x is not None:
+            self._x_speed += inc_speed_x
+
+        if inc_speed_y is not None:
+            self._y_speed += inc_speed_y
+
+    def update_radius(self, radius: int):
+        self._radius = radius

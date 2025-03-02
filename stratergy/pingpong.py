@@ -1,7 +1,7 @@
 from constants.screen import SCREEN_WIDTH
 from objects.ball import Ball
 
-MARGIN_OF_ERROR = 5
+MARGIN_OF_ERROR = 0
 
 
 def winning_strategy_for_right_player(ball: Ball):

@@ -6,6 +6,7 @@ from constants.bat import BatSpeed, BatDimensions
 from constants.screen import SCREEN_WIDTH, SCREEN_HEIGHT
 from objects.ball import Ball
 from objects.bat import Bat
+from objects.power import Power
 from objects.screen import Screen
 
 
@@ -23,6 +24,7 @@ class Character(Bat):
             left_button: Any = pygame.K_LEFT,
             right_button: Any = pygame.K_RIGHT,
             down_button: Any = pygame.K_DOWN,
+            power_button: Any = pygame.K_SPACE,
             up_button: Any = pygame.K_UP,
             max_x_axis: int = None,
             max_y_axis: int = None,
@@ -30,7 +32,8 @@ class Character(Bat):
             min_y_axis: int = None,
             ball: Ball = None,
             no_hit_zone: str = "left",
-            hit_character_img: Optional[str] = None
+            hit_character_img: Optional[str] = None,
+            power: Power = None
             ):
         super().__init__(
             screen=screen,
@@ -43,6 +46,7 @@ class Character(Bat):
             left_button=left_button,
             right_button=right_button,
             down_button=down_button,
+            power_button=power_button,
             up_button=up_button,
             max_x_axis=max_x_axis,
             max_y_axis=max_y_axis,
@@ -50,6 +54,7 @@ class Character(Bat):
             min_y_axis=min_y_axis,
             ball=ball,
             no_hit_zone=no_hit_zone,
+            power=power
         )
         self._hit_time = None
         self.character_img = pygame.image.load(image_loc).convert_alpha()
@@ -65,6 +70,9 @@ class Character(Bat):
 
     def display(self):
         self._validate_position()
+        if self.power:
+            self.power.is_still_power_up()
+
         if self._hit_ball():
             self._hit_time = pygame.time.get_ticks()
 

@@ -7,6 +7,7 @@ from constants.bat import BatSpeed, BatRestrictions, BatDimensions
 from constants.common import Colors
 from constants.screen import SCREEN_WIDTH, SCREEN_HEIGHT
 from objects.ball import Ball
+from objects.power import Power
 from objects.screen import Screen
 
 
@@ -25,12 +26,14 @@ class Bat:
         right_button: Any = pygame.K_RIGHT,
         down_button: Any = pygame.K_DOWN,
         up_button: Any = pygame.K_UP,
+        power_button: Any = pygame.K_SPACE,
         max_x_axis: int = None,
         max_y_axis: int = None,
         min_x_axis: int = None,
         min_y_axis: int = None,
         ball: Ball = None,
         no_hit_zone: str = "left",
+        power: Power = None
     ):
         self._color = color
         self._rect_height = rect_height
@@ -66,9 +69,10 @@ class Bat:
         self._right_button = right_button
         self._up_button = up_button
         self._down_button = down_button
+        self._power_button = power_button
 
         self.no_hit_zone = no_hit_zone
-        print("Bat constructor is called!")
+        self.power = power
 
     def move(self, keys):
         if keys[self._left_button]:
@@ -83,8 +87,13 @@ class Bat:
         if keys[self._down_button]:
             self.move_down()
 
+        if keys[self._power_button]:
+            self.power_up()
+
     def display(self):
         self._validate_position()
+        if self.power:
+            self.power.is_still_power_up()
         self._hit_ball()
         pygame.draw.rect(self._screen, self._color, self.get_bat())
 
@@ -123,6 +132,10 @@ class Bat:
 
     def move_down(self):
         self._y_axis_loc += self._y_speed
+
+    def power_up(self):
+        print("Doing power up !!")
+        self.power.use()
 
     def _validate_position(self):
         if self._x_axis_loc < self._min_x_axis:
